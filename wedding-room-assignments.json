@@ -1,0 +1,44 @@
+[
+  {
+    "id": "r_vss26wckfhg_mipm9kup",
+    "propertyName": "Puruda Heritage Stay",
+    "propertyAddress": "5G7V+XVG, Itagalpura Main Rd, Rajanukunte, Karnataka 560119",
+    "propertyDirections": "This is an Airbnb booking.\nCheck-in | Sat, 13 Dec | 2:00 pm (1:00 pm)\nCheckout | Sun, 14 Dec | 11:00 am (7:00 pm)",
+    "propertyImage": "puruda_heritage.jpg",
+    "primaryGuest": "Ravishankar",
+    "roomNumber": "1",
+    "roomNotes": "Ground floor room 1",
+    "guests": [
+      "Ravishankar",
+      "Karthik"
+    ]
+  },
+  {
+    "id": "r_o33orsld67t_mipmj9nh",
+    "propertyName": "Park Inn and Suites by Radisson (Yelahanka)",
+    "propertyAddress": "Motion Institute Of Management Studies Rtnet Public School & Rt Nagar Group Of Institution, Doddaballapura Main Rd, Singanayakanahalli, Bengaluru, Karnataka 560119",
+    "propertyDirections": "This hotel is within walking distance of the Sai Satkar Convention Center",
+    "propertyImage": "Park_Inn_and_Suites_by_Radisson.jpg",
+    "primaryGuest": "Sandeep R Murthy",
+    "roomNumber": "-1",
+    "roomNotes": "",
+    "guests": [
+      "Sandeep R Murthy",
+      "Ravikumar R Murthy"
+    ]
+  },
+  {
+    "id": "r_grc7ft1teve_mipmpy14",
+    "propertyName": "Sai Satkar Apartments",
+    "propertyAddress": "No.3/1, Doddaballapura Main Rd, behind Hotel-The Sai Leela, Yelahanka, Singanayakanahalli, Bengaluru, Karnataka 560119",
+    "propertyDirections": "These are apartments available within the same compound as the convention center.",
+    "propertyImage": "Sai_Satkar_Convention_Center.jpg",
+    "primaryGuest": "Hanamanthu",
+    "roomNumber": "1",
+    "roomNotes": "",
+    "guests": [
+      "Hanamanthu",
+      "Kalpana"
+    ]
+  }
+]

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sandeep &amp; Nanditha - Travel &amp; Stay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Optional Google Fonts (works when online) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="hero-wrapper hero-wrapper-small">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h1 class="hero-names">Travel &amp; Stay</h1>
+        <div class="hero-subtitle">
+          Where you're staying, who you're with, and how to get there.
+        </div>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <div class="nav-inner">
+        <a class="nav-link" href="index.html#home">Home</a>
+        <a class="nav-link" href="index.html#our-story">Our Story</a>
+        <a class="nav-link" href="index.html#photos">Photos</a>
+        <a class="nav-link" href="index.html#wedding-party">Wedding Party</a>
+        <a class="nav-link" href="index.html#qa">Q + A</a>
+        <a class="nav-link active" href="travel.html">Travel</a>
+        <a class="nav-link" href="index.html#things-to-do">Things to Do</a>
+        <a class="nav-link" href="index.html#registry">Registry</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="travel-page" class="travel-page">
+    <!-- Edit + JSON controls -->
+    <section class="section travel-edit-controls">
+      <div class="site-edit-inner">
+        <label class="edit-toggle">
+          <input type="checkbox" id="editModeToggle">
+          <span class="edit-toggle-slider"></span>
+          <span class="edit-toggle-label">Room edit mode</span>
+        </label>
+        <button type="button" id="exportJsonBtn" class="btn-small">
+          Export Rooms JSON
+        </button>
+        <button type="button" id="importJsonBtn" class="btn-small">
+          Import Rooms JSON
+        </button>
+        <input type="file"
+               id="importJsonInput"
+               accept=".json,application/json"
+               style="display:none;" />
+      </div>
+    </section>
+
+    <!-- Properties grid -->
+    <section class="section">
+      <h2>Where you'll be staying</h2>
+      <p class="section-muted">
+        Start by choosing your hotel, apartment, or stay. Then scroll down to see room numbers and who you're sharing with.
+      </p>
+      <div id="propertyGrid" class="property-grid">
+        <!-- populated by JS -->
+      </div>
+    </section>
+
+    <!-- Focused property + directions -->
+    <section class="section" id="travel-main-section">
+      <div class="travel-focus-layout">
+        <div class="travel-property-focus">
+          <div id="focusPropertyImage" class="focus-property-image placeholder"></div>
+          <div class="travel-property-details">
+            <h2 id="selectedPropertyName">Select a property to get started</h2>
+            <p id="selectedPropertyAddress" class="section-muted"></p>
+            <p id="selectedPropertyDirections" class="section-muted"></p>
+          </div>
+        </div>
+
+        <!-- Guest search -->
+        <div class="travel-search-card">
+          <h3>Find your room</h3>
+          <p class="section-muted small-spaced">
+            Search for your name to see where you're staying and who you're sharing with.
+          </p>
+          <input
+            type="text"
+            id="guestSearchInput"
+            class="input-text"
+            placeholder="Start typing your name..."
+          />
+          <div id="guestSearchResults" class="guest-results">
+            <!-- populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rooms + form -->
+    <section class="section">
+      <div class="room-layout">
+        <div class="room-list-column">
+          <h3>Rooms / Apartments</h3>
+          <div id="roomList">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="room-form-column">
+          <h3>Manage room assignments</h3>
+          <p class="section-muted small-spaced">
+            Turn on <strong>Room edit mode</strong> (password protected) to add or change room allocations.
+          </p>
+
+          <form id="roomForm" class="room-form">
+            <div id="formError" class="form-error" style="display:none;"></div>
+
+            <div class="form-group">
+              <label for="formPropertyName">Property name</label>
+              <input type="text" id="formPropertyName" class="input-text" placeholder="e.g. Clarion Hotel" />
+            </div>
+
+            <div class="form-group">
+              <label for="formPropertyAddress">Property address</label>
+              <textarea id="formPropertyAddress" class="input-text" rows="2" placeholder="Full postal address"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="formPropertyDirections">Directions / travel notes</label>
+              <textarea id="formPropertyDirections" class="input-text" rows="3" placeholder="Landmarks, travel time to venues, parking info..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="formPropertyImage">Property image URL (optional)</label>
+              <input type="text" id="formPropertyImage" class="input-text" placeholder="Relative path or full URL to an image" />
+            </div>
+
+            <hr class="form-divider" />
+
+            <div class="form-group">
+              <label for="formPrimaryGuest">Primary guest (room label)</label>
+              <input type="text" id="formPrimaryGuest" class="input-text" placeholder="e.g. Karthik" />
+            </div>
+
+            <div class="form-group">
+              <label for="formRoomNumber">Room / apartment number</label>
+              <input type="text" id="formRoomNumber" class="input-text" placeholder="e.g. R2 - first floor with bunk beds" />
+            </div>
+
+            <div class="form-group">
+              <label for="formGuestList">Guests sharing this room</label>
+              <textarea id="formGuestList" class="input-text" rows="3" placeholder="Comma-separated list of names"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="formRoomNotes">Room notes</label>
+              <textarea id="formRoomNotes" class="input-text" rows="3" placeholder="Check-in time, bed types, any other notes"></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="saveRoom" class="btn-small">
+                Add Room
+              </button>
+              <button type="button" id="cancelEdit" class="btn-small btn-secondary" style="display:none;">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Sandeep &amp; Nanditha &mdash; December 13, 2025 &middot; Bangalore
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+[
+  {
+    "id": "Rajkamal_Driver_rooms_(2)_Drivers_group",
+    "propertyName": "Raj kamal",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Drivers group",
+    "roomNumber": "Driver rooms (2)",
+    "roomNotes": "2 rooms allocated for 4 drivers.",
+    "guests": [
+      "4 drivers (names TBD)"
+    ]
+  },
+  {
+    "id": "Rajkamal_Available_rooms_(2)_Available_block",
+    "propertyName": "Raj kamal",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Available block",
+    "roomNumber": "Available rooms (2)",
+    "roomNotes": "2 rooms available (unassigned).",
+    "guests": []
+  },
+  {
+    "id": "Ramanashree_Suites_block_Available_suites",
+    "propertyName": "Ramanashree",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Available suites",
+    "roomNumber": "Suites block",
+    "roomNotes": "10 suites available (unassigned).",
+    "guests": []
+  },
+  {
+    "id": "StageroominChatra_Stage_room_Anitha",
+    "propertyName": "Stage room in Chatra",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Anitha",
+    "roomNumber": "Stage room",
+    "roomNotes": "Stage room in Chatra.",
+    "guests": [
+      "Anitha",
+      "Sundaramba"
+    ]
+  },
+  {
+    "id": "Radisson_Room_1_(extra_bed)_Ravi",
+    "propertyName": "Radisson",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Ravi",
+    "roomNumber": "Room 1 (extra bed)",
+    "roomNotes": "Extra bed in room.",
+    "guests": [
+      "Ravi",
+      "Sandeep",
+      "Mamatha"
+    ]
+  },
+  {
+    "id": "Radisson_Room_2_Dakshayini",
+    "propertyName": "Radisson",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Dakshayini",
+    "roomNumber": "Room 2",
+    "roomNotes": "",
+    "guests": [
+      "Dakshayini",
+      "Dr. Murthy"
+    ]
+  },
+  {
+    "id": "Clarion_Jr_suite_room_Sindoora",
+    "propertyName": "Clarion",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Sindoora",
+    "roomNumber": "Jr suite room",
+    "roomNotes": "Junior suite room.",
+    "guests": [
+      "Sindoora",
+      "Shreya",
+      "Apoorva"
+    ]
+  },
+  {
+    "id": "Clarion_Superior_double_bed_(1)_Sushma",
+    "propertyName": "Clarion",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Sushma",
+    "roomNumber": "Superior double bed (1)",
+    "roomNotes": "Superior double bed.",
+    "guests": [
+      "Sushma",
+      "Prital"
+    ]
+  },
+  {
+    "id": "Clarion_Superior_double_bed_(2)_Shruthi",
+    "propertyName": "Clarion",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Shruthi",
+    "roomNumber": "Superior double bed (2)",
+    "roomNotes": "Superior double bed.",
+    "guests": [
+      "Shruthi"
+    ]
+  },
+  {
+    "id": "Clarion_Executive_room_3_beds_Shreenath",
+    "propertyName": "Clarion",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Shreenath",
+    "roomNumber": "Executive room 3 beds",
+    "roomNotes": "Executive room with 3 beds.",
+    "guests": [
+      "Shreenath",
+      "Reshma",
+      "Ananya"
+    ]
+  },
+  {
+    "id": "Apartment1_Bedroom_1_Dodamma",
+    "propertyName": "Apartment 1",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Dodamma",
+    "roomNumber": "Bedroom 1",
+    "roomNotes": "",
+    "guests": [
+      "Dodamma",
+      "Vijaya atte"
+    ]
+  },
+  {
+    "id": "Apartment1_Bedroom_2_Venki_mama",
+    "propertyName": "Apartment 1",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Venki mama",
+    "roomNumber": "Bedroom 2",
+    "roomNotes": "",
+    "guests": [
+      "Venki mama",
+      "Shantha"
+    ]
+  },
+  {
+    "id": "Apartment1_Hall_Suguna",
+    "propertyName": "Apartment 1",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Suguna",
+    "roomNumber": "Hall",
+    "roomNotes": "",
+    "guests": [
+      "Suguna",
+      "Shashi"
+    ]
+  },
+  {
+    "id": "Apartment2_Bedroom_1_Gayatri",
+    "propertyName": "Apartment 2",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Gayatri",
+    "roomNumber": "Bedroom 1",
+    "roomNotes": "",
+    "guests": [
+      "Gayatri",
+      "Pushpa"
+    ]
+  },
+  {
+    "id": "Apartment2_Bedroom_2_Radhi",
+    "propertyName": "Apartment 2",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Radhi",
+    "roomNumber": "Bedroom 2",
+    "roomNotes": "",
+    "guests": [
+      "Radhi",
+      "Savitri"
+    ]
+  },
+  {
+    "id": "Apartment2_Hall_Rekha",
+    "propertyName": "Apartment 2",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Rekha",
+    "roomNumber": "Hall",
+    "roomNotes": "",
+    "guests": [
+      "Rekha",
+      "Seeni tata"
+    ]
+  },
+  {
+    "id": "Apartment3_Bedroom_1_Amba",
+    "propertyName": "Apartment 3",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Amba",
+    "roomNumber": "Bedroom 1",
+    "roomNotes": "",
+    "guests": [
+      "Amba",
+      "Annapurna"
+    ]
+  },
+  {
+    "id": "Apartment3_Bedroom_2_Vaidhya",
+    "propertyName": "Apartment 3",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Vaidhya",
+    "roomNumber": "Bedroom 2",
+    "roomNotes": "",
+    "guests": [
+      "Vaidhya",
+      "Yogesh babu"
+    ]
+  },
+  {
+    "id": "Apartment3_Hall_Manjula",
+    "propertyName": "Apartment 3",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Manjula",
+    "roomNumber": "Hall",
+    "roomNotes": "",
+    "guests": [
+      "Manjula",
+      "Satisha"
+    ]
+  },
+  {
+    "id": "Puruda_R1_-_ground_floor_Karthik",
+    "propertyName": "Puruda",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Karthik",
+    "roomNumber": "R1 - ground floor",
+    "roomNotes": "R1 - ground floor.",
+    "guests": [
+      "Karthik",
+      "Ravi Shankar",
+      "Chinni"
+    ]
+  },
+  {
+    "id": "Puruda_R2_-_first_floor_with_bunk_beds_Jyothi",
+    "propertyName": "Puruda",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Jyothi",
+    "roomNumber": "R2 - first floor with bunk beds",
+    "roomNotes": "R2 - first floor with bunk beds.",
+    "guests": [
+      "Jyothi",
+      "Nithya",
+      "Amrutha",
+      "Kalpana",
+      "Hanu"
+    ]
+  },
+  {
+    "id": "Puruda_R3_-_terrace_room_Roopa",
+    "propertyName": "Puruda",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Roopa",
+    "roomNumber": "R3 - terrace room",
+    "roomNotes": "R3 - terrace room.",
+    "guests": [
+      "Roopa",
+      "Akanksha",
+      "Praseeda",
+      "Deepa",
+      "Rachana",
+      "Sindhu"
+    ]
+  },
+  {
+    "id": "Puruda_R4_-_first_floor_first_room_Balu",
+    "propertyName": "Puruda",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Balu",
+    "roomNumber": "R4 - first floor first room",
+    "roomNotes": "R4 - first floor first room.",
+    "guests": [
+      "Balu",
+      "Amrutha",
+      "Ishana",
+      "Usha",
+      "Nagaraj"
+    ]
+  },
+  {
+    "id": "Puruda_R5_-_unknown_room_Ramesh_tenant",
+    "propertyName": "Puruda",
+    "propertyAddress": "",
+    "propertyDirections": "",
+    "propertyImage": "",
+    "primaryGuest": "Ramesh tenant",
+    "roomNumber": "R5 - unknown room",
+    "roomNotes": "R5 - unknown room.",
+    "guests": [
+      "Ramesh tenant",
+      "Savitha",
+      "Anushka",
+      "Dad"
+    ]
+  }
+]

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sandeep &amp; Nanditha - Wedding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Optional Google Fonts (works when online) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="hero-wrapper">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <h1 class="hero-names" data-editable-id="hero-names">Sandeep &amp; Nanditha</h1>
+        <div class="hero-subtitle" data-editable-id="hero-subtitle">
+          December 13, 2025 &bull; Bangalore, Karnataka, India
+        </div>
+        <div id="countdown" class="hero-countdown" data-editable-id="hero-countdown">
+          10 DAYS TO GO!
+        </div>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <div class="nav-inner">
+        <a class="nav-link active" href="#home">Home</a>
+        <a class="nav-link" href="#our-story">Our Story</a>
+        <a class="nav-link" href="#photos">Photos</a>
+        <a class="nav-link" href="#wedding-party">Wedding Party</a>
+        <a class="nav-link" href="#qa">Q + A</a>
+        <a class="nav-link" href="travel.html">Travel</a>
+        <a class="nav-link" href="#things-to-do">Things to Do</a>
+        <a class="nav-link" href="#registry">Registry</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- PAGE EDIT CONTROLS -->
+    <section class="section site-edit-controls">
+      <div class="site-edit-inner">
+        <label class="edit-toggle">
+          <input type="checkbox" id="siteEditToggle">
+          <span class="edit-toggle-slider"></span>
+          <span class="edit-toggle-label">Page edit mode</span>
+        </label>
+        <button type="button" id="siteEditSave" class="btn-small">
+          Save changes
+        </button>
+        <button type="button" id="siteEditExport" class="btn-small">
+          Export JSON
+        </button>
+        <button type="button" id="siteEditImport" class="btn-small">
+          Import JSON
+        </button>
+        <input type="file"
+               id="siteEditImportInput"
+               accept=".json,application/json"
+               style="display:none;" />
+        <span id="siteEditStatus" class="section-muted small-spaced"></span>
+      </div>
+    </section>
+
+    <!-- HOME -->
+    <section id="home" class="section">
+      <h2 data-editable-id="home-title">Welcome</h2>
+      <div class="two-column">
+        <div data-editable-id="home-left">
+          <p>
+            Thank you for joining us in Bangalore as we celebrate the beginning
+            of our married life together. This site has everything you need to
+            plan your trip, from hotel details to local recommendations.
+          </p>
+          <p>
+            Please use the <strong>Travel</strong> page to find your room or
+            apartment information, and don’t hesitate to reach out if you have
+            any questions.
+          </p>
+        </div>
+        <div class="card" data-editable-id="home-right">
+          <div class="pill">Weekend Schedule</div>
+          <p><strong>Friday</strong> &mdash; Welcome dinner</p>
+          <p><strong>Saturday</strong> &mdash; Wedding ceremony &amp; reception</p>
+          <p><strong>Sunday</strong> &mdash; Farewell brunch</p>
+          <p class="section-muted">Formal invitations will include exact times and locations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR STORY -->
+    <section id="our-story" class="section">
+      <h2 data-editable-id="story-title">Our Story</h2>
+      <div class="two-column" data-editable-id="story-content">
+        <div>
+          <p>
+            It started with a chance meeting, a shared cup of coffee, and a
+            conversation that lasted much longer than either of us expected.
+          </p>
+          <p>
+            Over the years we have collected cities, inside jokes, and a lot of
+            late-night takeout. We have supported each other through new jobs,
+            big moves, and everything in between.
+          </p>
+          <p>
+            We cannot wait to celebrate this next chapter with all of you, our
+            favorite people, in the city that means so much to us.
+          </p>
+        </div>
+        <div class="card">
+          <div class="pill">Timeline</div>
+          <p><strong>2018</strong> &mdash; First date</p>
+          <p><strong>2021</strong> &mdash; Adopted our first plant (and kept it alive!)</p>
+          <p><strong>2024</strong> &mdash; Got engaged</p>
+          <p><strong>2025</strong> &mdash; Getting married in Bangalore</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTOS -->
+    <section id="photos" class="section">
+      <h2 data-editable-id="photos-title">Photos</h2>
+
+      <div data-editable-id="photos-text">
+        <p>
+          We’ll add photos here after the wedding. For now, imagine lots of
+          smiling faces, bright marigolds, and plenty of dancing.
+        </p>
+      </div>
+
+      <!-- Photo upload / management (shown only in edit mode) -->
+      <div class="photo-edit-toolbar">
+        <label class="btn-small photo-upload-label">
+          Add / Replace Photos
+          <input type="file"
+                 id="photoUploadInput"
+                 accept="image/*"
+                 multiple
+                 style="display:none;">
+        </label>
+        <button type="button" id="clearPhotosBtn" class="btn-small btn-secondary">
+          Clear all photos
+        </button>
+        <span id="photoStatus" class="section-muted small-spaced"></span>
+      </div>
+
+      <!-- Grid rendered by JS -->
+      <div class="photo-grid" id="photoGrid">
+        <!-- JS will render placeholders or images here -->
+      </div>
+    </section>
+
+    <!-- WEDDING PARTY -->
+    <section id="wedding-party" class="section">
+      <h2 data-editable-id="party-title">Wedding Party</h2>
+      <div data-editable-id="party-content">
+        <p class="section-intro">
+          We are so grateful for the people standing beside us.
+        </p>
+        <div class="party-grid">
+          <div class="party-card">
+            <div class="party-role">Maid of Honor</div>
+            <div class="party-name">Ananya Rao</div>
+            <p class="section-muted">College roommate, dance-floor supervisor.</p>
+          </div>
+          <div class="party-card">
+            <div class="party-role">Best Man</div>
+            <div class="party-name">Vikram Sharma</div>
+            <p class="section-muted">Childhood friend, speech enthusiast.</p>
+          </div>
+          <div class="party-card">
+            <div class="party-role">Bridesmaid</div>
+            <div class="party-name">Meera Iyer</div>
+            <p class="section-muted">Coffee partner and voice of reason.</p>
+          </div>
+          <div class="party-card">
+            <div class="party-role">Groomsman</div>
+            <div class="party-name">Rahul Patel</div>
+            <p class="section-muted">Tech support and pun supplier.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q + A -->
+    <section id="qa" class="section">
+      <h2 data-editable-id="qa-title">Q + A</h2>
+      <div class="card" data-editable-id="qa-content">
+        <p><strong>What should I wear?</strong></p>
+        <p class="section-muted">
+          Think festive and comfortable. Traditional Indian attire or
+          semi-formal Western outfits are both welcome.
+        </p>
+
+        <p><strong>Can I bring a plus one?</strong></p>
+        <p class="section-muted">
+          If your invitation mentions a guest by name, they are warmly invited!
+          If you’re unsure, feel free to reach out.
+        </p>
+
+        <p><strong>Are children invited?</strong></p>
+        <p class="section-muted">
+          We love your little ones, but due to space we’re keeping the event
+          mostly adults-only, with exceptions noted on specific invitations.
+        </p>
+
+        <p><strong>Will there be transportation?</strong></p>
+        <p class="section-muted">
+          We plan to provide group transportation between the main hotel and
+          the ceremony. Details will be shared closer to the date.
+        </p>
+      </div>
+    </section>
+
+    <!-- THINGS TO DO -->
+    <section id="things-to-do" class="section">
+      <h2 data-editable-id="todo-title">Things to Do</h2>
+      <div class="two-column" data-editable-id="todo-content">
+        <div>
+          <p>
+            If you’re traveling from out of town, we hope you’ll get to explore
+            Bangalore a little while you’re here.
+          </p>
+          <ul class="basic-list">
+            <li>Coffee in Indiranagar or Koramangala.</li>
+            <li>Walk through Cubbon Park in the early morning.</li>
+            <li>Visit one of the city’s many bookstores and cafes.</li>
+            <li>Enjoy a dosa, filter coffee, and some local sweets.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="pill">Neighborhoods</div>
+          <span class="tag">MG Road</span>
+          <span class="tag">Indiranagar</span>
+          <span class="tag">Koramangala</span>
+          <span class="tag">Whitefield</span>
+          <p class="section-muted" style="margin-top:10px;">
+            We’ll share more detailed recommendations closer to the wedding.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTRY -->
+    <section id="registry" class="section">
+      <h2 data-editable-id="registry-title">Registry</h2>
+      <div data-editable-id="registry-content">
+        <p>
+          Your love and presence in Bangalore are the greatest gifts we could
+          ask for. If you would still like to give a gift, we’ll share registry
+          details here soon.
+        </p>
+        <p class="section-muted">
+          In the meantime, sharing travel photos and memories with us is more
+          than enough.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer data-editable-id="footer-text">
+    Sandeep &amp; Nanditha &mdash; December 13, 2025 &middot; Bangalore
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
