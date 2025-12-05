@@ -63,10 +63,19 @@ function setupIndexEditing() {
   var saveBtn = document.getElementById("siteEditSave");
   var exportBtn = document.getElementById("siteEditExport");
   var importBtn = document.getElementById("siteEditImport");
+  var snapshotBtn = document.getElementById("siteEditSnapshot"); // NEW
   var importInput = document.getElementById("siteEditImportInput");
   var statusEl = document.getElementById("siteEditStatus");
 
-  if (!toggle || !saveBtn || !exportBtn || !importBtn || !importInput || !statusEl) {
+  if (
+    !toggle ||
+    !saveBtn ||
+    !exportBtn ||
+    !importBtn ||
+    !snapshotBtn ||
+    !importInput ||
+    !statusEl
+  ) {
     return; // not on index.html
   }
 
@@ -254,6 +263,9 @@ function setupIndexEditing() {
       else node.classList.remove("editable-active");
     });
     saveBtn.style.display = on ? "inline-block" : "none";
+    if (snapshotBtn) {
+      snapshotBtn.style.display = on ? "inline-block" : "none"; // NEW: only in edit mode
+    }
     if (photoToolbar) {
       photoToolbar.style.display = on ? "flex" : "none";
     }
@@ -360,6 +372,56 @@ function setupIndexEditing() {
     };
     reader.readAsText(file);
   });
+
+  // NEW: Download updated HTML + full state snapshot
+  snapshotBtn.addEventListener("click", function () {
+    // extra safety: already in edit mode, but keep admin requirement
+    if (!requireAdmin()) return;
+
+    // 1) Snapshot of THIS PAGE'S HTML as you see it now
+    var fullHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    var htmlBlob = new Blob([fullHtml], { type: "text/html" });
+    var htmlUrl = URL.createObjectURL(htmlBlob);
+    var aHtml = document.createElement("a");
+    aHtml.href = htmlUrl;
+    aHtml.download = "index.updated.html";
+    document.body.appendChild(aHtml);
+    aHtml.click();
+    document.body.removeChild(aHtml);
+    URL.revokeObjectURL(htmlUrl);
+
+    // 2) Also snapshot the full site state (for travel.html etc.)
+    var content = gatherContent();
+    var rooms = [];
+    try {
+      var rawRooms = localStorage.getItem("weddingRoomAssignments_v2");
+      if (rawRooms) rooms = JSON.parse(rawRooms) || [];
+    } catch (e) {
+      rooms = [];
+    }
+
+    var siteState = {
+      note: "Snapshot of homepage content, photos, and room assignments from this browser.",
+      homepageContent: content,
+      homepagePhotos: sitePhotos || [],
+      roomAssignments: rooms
+    };
+
+    var stateBlob = new Blob([JSON.stringify(siteState, null, 2)], {
+      type: "application/json"
+    });
+    var stateUrl = URL.createObjectURL(stateBlob);
+    var aState = document.createElement("a");
+    aState.href = stateUrl;
+    aState.download = "wedding-site-state.json";
+    document.body.appendChild(aState);
+    aState.click();
+    document.body.removeChild(aState);
+    URL.revokeObjectURL(stateUrl);
+
+    statusEl.textContent =
+      "Downloaded index.updated.html and wedding-site-state.json. You can use these to update your base files.";
+  });
 }
 
 // --------------------
@@ -406,6 +468,7 @@ function setupTravelPage() {
   var importInput = document.getElementById("importJsonInput");
 
   var selectedPropertyNameEl = document.getElementById("selectedPropertyName");
+  var selectedGuestSummaryEl = document.getElementById("selectedGuestSummary");
   var selectedPropertyAddressEl = document.getElementById("selectedPropertyAddress");
   var selectedPropertyDirectionsEl = document.getElementById("selectedPropertyDirections");
   var focusPropertyImageEl = document.getElementById("focusPropertyImage");
@@ -526,28 +589,40 @@ function setupTravelPage() {
     ];
   }
 
-  function getProperties() {
-    var map = {};
-    roomAssignments.forEach(function (room) {
-      var key = propertyKeyFromRoom(room);
-      if (!key.trim()) return;
-      if (!map[key]) {
-        map[key] = {
-          key: key,
-          name: room.propertyName || "Property",
-          address: room.propertyAddress || "",
-          directions: room.propertyDirections || "",
-          image: room.propertyImage || ""
-        };
-      } else {
-        if (!map[key].image && room.propertyImage) map[key].image = room.propertyImage;
-        if (!map[key].directions && room.propertyDirections) {
-          map[key].directions = room.propertyDirections;
-        }
+function getProperties() {
+  var map = {};
+
+  roomAssignments.forEach(function (room) {
+    var key = propertyKeyFromRoom(room);
+    if (!key) return;
+
+    if (!map[key]) {
+      // Create a new property entry
+      map[key] = {
+        key: key,
+        name: room.propertyName || "Property",
+        address: room.propertyAddress || "",
+        directions: room.propertyDirections || "",
+        image: room.propertyImage || ""
+      };
+    } else {
+      // Fill in any missing info from additional rooms at same property
+      if (!map[key].address && room.propertyAddress) {
+        map[key].address = room.propertyAddress;
       }
-    });
-    return Object.values(map);
-  }
+      if (!map[key].directions && room.propertyDirections) {
+        map[key].directions = room.propertyDirections;
+      }
+      if (!map[key].image && room.propertyImage) {
+        map[key].image = room.propertyImage;
+      }
+    }
+  });
+
+  return Object.values(map);
+}
+
+
 
   function getRoomsForProperty(propertyKey) {
     return roomAssignments.filter(function (room) {
@@ -631,32 +706,68 @@ function setupTravelPage() {
     });
   }
 
-  function renderSelectedPropertyHeader() {
-    var prop = getSelectedProperty();
-    if (!prop) {
-      selectedPropertyNameEl.textContent = "Select a property to get started";
-      selectedPropertyAddressEl.textContent = "";
-      selectedPropertyDirectionsEl.textContent = "";
-      if (focusPropertyImageEl) {
-        focusPropertyImageEl.style.backgroundImage = "";
-        focusPropertyImageEl.classList.add("placeholder");
-      }
-      return;
-    }
-    selectedPropertyNameEl.textContent = prop.name;
-    selectedPropertyAddressEl.textContent = prop.address || "";
-    selectedPropertyDirectionsEl.textContent = prop.directions || "";
-
+function renderSelectedPropertyHeader() {
+  var prop = getSelectedProperty();
+  if (!prop) {
+    selectedPropertyNameEl.textContent = "Select a property to get started";
+    if (selectedGuestSummaryEl) selectedGuestSummaryEl.textContent = "";
+    selectedPropertyAddressEl.textContent = "";
+    selectedPropertyDirectionsEl.textContent = "";
     if (focusPropertyImageEl) {
-      if (prop.image) {
-        focusPropertyImageEl.style.backgroundImage = 'url("' + prop.image + '")';
-        focusPropertyImageEl.classList.remove("placeholder");
+      focusPropertyImageEl.style.backgroundImage = "";
+      focusPropertyImageEl.classList.add("placeholder");
+    }
+    return;
+  }
+
+  // Default: just show the property name
+  selectedPropertyNameEl.textContent = prop.name;
+
+  // If we’re in “search highlight” mode, show who this result is for
+  if (selectedGuestSummaryEl) {
+    if (highlightFromSearch && highlightedRoomId) {
+      var room = roomAssignments.find(function (r) {
+        return r.id === highlightedRoomId;
+      });
+
+      if (room) {
+        var guestLabel = (highlightedGuestName || "").trim();
+        if (!guestLabel && room.primaryGuest) {
+          guestLabel = room.primaryGuest;
+        }
+        var roomLabel = room.roomNumber
+          ? "Room / Apt " + room.roomNumber
+          : "Room assignment";
+
+        if (guestLabel) {
+          selectedGuestSummaryEl.textContent = guestLabel + " — " + roomLabel;
+        } else {
+          selectedGuestSummaryEl.textContent = roomLabel;
+        }
       } else {
-        focusPropertyImageEl.style.backgroundImage = "";
-        focusPropertyImageEl.classList.add("placeholder");
+        selectedGuestSummaryEl.textContent = "";
       }
+    } else {
+      // No active search highlight
+      selectedGuestSummaryEl.textContent = "";
     }
   }
+
+  // Address + directions always correspond to the currently selected property
+  selectedPropertyAddressEl.textContent = prop.address || "";
+  selectedPropertyDirectionsEl.textContent = prop.directions || "";
+
+  // Property photo
+  if (focusPropertyImageEl) {
+    if (prop.image) {
+      focusPropertyImageEl.style.backgroundImage = 'url("' + prop.image + '")';
+      focusPropertyImageEl.classList.remove("placeholder");
+    } else {
+      focusPropertyImageEl.style.backgroundImage = "";
+      focusPropertyImageEl.classList.add("placeholder");
+    }
+  }
+}
 
   function renderRooms() {
     roomListEl.innerHTML = "";
@@ -784,91 +895,104 @@ function setupTravelPage() {
   }
 
   // --------- Guest search ----------
-  function updateGuestSearchResults() {
-    highlightedRoomId = null;
-    highlightedGuestName = "";
-    highlightFromSearch = false;
+function updateGuestSearchResults() {
+  // Reset highlight state; we’ll set it again if we find matches
+  highlightedRoomId = null;
+  highlightedGuestName = "";
+  highlightFromSearch = false;
 
-    var term = guestSearchInput.value || "";
-    term = term.trim().toLowerCase();
-    guestSearchResultsEl.innerHTML = "";
+  var term = (guestSearchInput.value || "").trim().toLowerCase();
+  guestSearchResultsEl.innerHTML = "";
 
-    if (term.length === 0) {
-      var hint = document.createElement("div");
-      hint.className = "section-muted small-spaced";
-      hint.textContent = "Start typing to search for a guest.";
-      guestSearchResultsEl.appendChild(hint);
-      return;
-    }
+  // No term: clear search UI and revert header/rooms to normal view
+  if (term.length === 0) {
+    renderSelectedPropertyHeader();
+    renderRooms();
 
-    if (term.length < 2) {
-      var short = document.createElement("div");
-      short.className = "section-muted small-spaced";
-      short.textContent = "Type at least two letters.";
-      guestSearchResultsEl.appendChild(short);
-      return;
-    }
-
-    var results = [];
-
-    roomAssignments.forEach(function (room) {
-      var key = propertyKeyFromRoom(room);
-      var propName = room.propertyName || "Property";
-
-      if (room.primaryGuest && room.primaryGuest.toLowerCase().indexOf(term) !== -1) {
-        results.push({
-          roomId: room.id,
-          propertyKey: key,
-          guestName: room.primaryGuest,
-          propertyName: propName,
-          roomNumber: room.roomNumber || ""
-        });
-      }
-      if (Array.isArray(room.guests)) {
-        room.guests.forEach(function (g) {
-          if (g && g.toLowerCase().indexOf(term) !== -1) {
-            results.push({
-              roomId: room.id,
-              propertyKey: key,
-              guestName: g,
-              propertyName: propName,
-              roomNumber: room.roomNumber || ""
-            });
-          }
-        });
-      }
-    });
-
-    if (!results.length) {
-      var none = document.createElement("div");
-      none.className = "section-muted small-spaced";
-      none.textContent = "No matching guests found.";
-      guestSearchResultsEl.appendChild(none);
-      return;
-    }
-
-    results.forEach(function (res) {
-      var item = document.createElement("div");
-      item.className = "guest-result-item";
-      item.dataset.roomId = res.roomId;
-      item.dataset.guestName = res.guestName;
-      item.dataset.propertyKey = res.propertyKey;
-
-      var main = document.createElement("div");
-      main.className = "guest-result-main";
-      main.innerHTML = highlightTerm(res.guestName, term);
-
-      var sub = document.createElement("div");
-      sub.className = "guest-result-sub";
-      var summary = res.propertyName + " • Room " + (res.roomNumber || "–");
-      sub.textContent = summary;
-
-      item.appendChild(main);
-      item.appendChild(sub);
-
-      guestSearchResultsEl.appendChild(item);
-    });
+    var hint = document.createElement("div");
+    hint.className = "section-muted small-spaced";
+    hint.textContent = "Start typing to search for a guest.";
+    guestSearchResultsEl.appendChild(hint);
+    return;
   }
+
+  // Too short: ask for at least two letters and clear highlight
+  if (term.length < 2) {
+    renderSelectedPropertyHeader();
+    renderRooms();
+
+    var short = document.createElement("div");
+    short.className = "section-muted small-spaced";
+    short.textContent = "Type at least two letters.";
+    guestSearchResultsEl.appendChild(short);
+    return;
+  }
+
+  var results = [];
+
+  // Search ONLY guests in the room, not primary resident name
+  roomAssignments.forEach(function (room) {
+    var key = propertyKeyFromRoom(room);
+    var propName = room.propertyName || "Property";
+
+    if (Array.isArray(room.guests)) {
+      room.guests.forEach(function (g) {
+        if (g && g.toLowerCase().indexOf(term) !== -1) {
+          results.push({
+            roomId: room.id,
+            propertyKey: key,
+            guestName: g,
+            propertyName: propName,
+            roomNumber: room.roomNumber || ""
+          });
+        }
+      });
+    }
+  });
+
+  if (!results.length) {
+  var none = document.createElement("div");
+  none.className = "section-muted small-spaced";
+  none.textContent = "No matching guests found.";
+  guestSearchResultsEl.appendChild(none);
+
+  // No matches = no search highlight
+  highlightedRoomId = null;
+  highlightedGuestName = "";
+  highlightFromSearch = false;
+  renderSelectedPropertyHeader();
+  renderRooms();
+  return;
+}
+
+// --- TOP RESULT drives the header + photo + room list ---
+var top = results[0];
+applyGuestSearchSelection(top.roomId, top.guestName, top.propertyKey);
+
+// Now render the visible list of matches
+results.forEach(function (res) {
+  var item = document.createElement("div");
+  item.className = "guest-result-item";
+  item.dataset.roomId = res.roomId;
+  item.dataset.guestName = res.guestName;
+  item.dataset.propertyKey = res.propertyKey;
+
+  var main = document.createElement("div");
+  main.className = "guest-result-main";
+  main.innerHTML = highlightTerm(res.guestName, term);
+
+  var sub = document.createElement("div");
+  sub.className = "guest-result-sub";
+  var summary = res.propertyName + " • Room " + (res.roomNumber || "–");
+  sub.textContent = summary;
+
+  item.appendChild(main);
+  item.appendChild(sub);
+
+  guestSearchResultsEl.appendChild(item);
+});
+}
+
 
   function focusAllRoomsForSelectedProperty() {
     var cards = roomListEl.querySelectorAll(".room-card");
@@ -895,6 +1019,26 @@ function setupTravelPage() {
       }, 1300);
     }
   }
+
+function applyGuestSearchSelection(roomId, guestName, propertyKey) {
+  highlightedRoomId = roomId;
+  highlightedGuestName = guestName || "";
+  highlightFromSearch = true;
+  selectedPropertyKey = propertyKey;
+
+  // Re-render everything to reflect this selection:
+  // - active property card
+  // - property photo
+  // - address + directions / travel notes
+  // - room list highlighting
+  renderProperties();
+  renderSelectedPropertyHeader();
+  renderRooms();
+
+  // Scroll the selected room into view
+  focusCurrentPropertyAndRoom(roomId);
+}
+
 
   function focusCurrentPropertyAndRoom(roomId) {
     var roomCard = roomListEl.querySelector('.room-card[data-room-id="' + roomId + '"]');
@@ -995,23 +1139,26 @@ function setupTravelPage() {
     updateGuestSearchResults();
   });
 
-  guestSearchResultsEl.addEventListener("click", function (e) {
-    var item = e.target.closest(".guest-result-item");
-    if (!item) return;
+guestSearchResultsEl.addEventListener("click", function (e) {
+  var item = e.target.closest(".guest-result-item");
+  if (!item) return;
 
-    var roomId = item.dataset.roomId;
-    var guestName = item.dataset.guestName || "";
+  var roomId = item.dataset.roomId;
+  var guestName = item.dataset.guestName || "";
+  var propertyKey = item.dataset.propertyKey;
+
+  // If for some reason the dataset didn’t have propertyKey,
+  // fall back to looking it up from the room object.
+  if (!propertyKey) {
     var room = roomAssignments.find(function (r) { return r.id === roomId; });
     if (!room) return;
+    propertyKey = propertyKeyFromRoom(room);
+  }
 
-    highlightedRoomId = room.id;
-    highlightedGuestName = guestName;
-    highlightFromSearch = true;
+  // Now make THIS clicked result the authoritative selection:
+  applyGuestSearchSelection(roomId, guestName, propertyKey);
+});
 
-    selectedPropertyKey = propertyKeyFromRoom(room);
-    renderAll();
-    focusCurrentPropertyAndRoom(room.id);
-  });
 
   // edit mode (password protected)
   editToggleEl.addEventListener("change", function () {

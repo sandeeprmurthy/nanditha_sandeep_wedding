@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Sandeep &amp; Nanditha - Travel &amp; Stay</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 
   <!-- Optional Google Fonts (works when online) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,11 +73,25 @@
       <div class="travel-focus-layout">
         <div class="travel-property-focus">
           <div id="focusPropertyImage" class="focus-property-image placeholder"></div>
-          <div class="travel-property-details">
-            <h2 id="selectedPropertyName">Select a property to get started</h2>
-            <p id="selectedPropertyAddress" class="section-muted"></p>
-            <p id="selectedPropertyDirections" class="section-muted"></p>
-          </div>
+<div class="travel-property-details">
+  <h2 id="selectedPropertyName">Select a property to get started</h2>
+
+  <!-- Who this result is for (guest + room) -->
+  <p id="selectedGuestSummary" class="section-muted"></p>
+
+  <!-- Address line, clearly labeled -->
+  <p class="section-muted">
+    <strong>Address:</strong>
+    <span id="selectedPropertyAddress"></span>
+  </p>
+
+  <!-- Directions / travel notes, clearly labeled -->
+  <p class="section-muted">
+    <strong>Directions / travel notes:</strong>
+    <span id="selectedPropertyDirections"></span>
+  </p>
+</div>
+
         </div>
 
         <!-- Guest search -->
@@ -178,6 +192,6 @@
     Sandeep &amp; Nanditha &mdash; December 13, 2025 &middot; Bangalore
   </footer>
 
-  <script src="main.js"></script>
+  <script src="./main.js"></script>
 </body>
 </html>

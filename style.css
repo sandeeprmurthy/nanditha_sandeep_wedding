@@ -462,9 +462,9 @@ p {
 /* Focused property section */
 .travel-focus-layout {
   display: flex;
+  flex-direction: column;
   gap: 20px;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .travel-property-focus {
@@ -472,6 +472,7 @@ p {
   display: flex;
   gap: 14px;
   align-items: stretch;
+  order: 2; /* NEW: show property photo + info under the search section */
 }
 
 .focus-property-image {
@@ -509,7 +510,9 @@ p {
   border-radius: 14px;
   border: 1px solid rgba(241, 217, 165, 0.2);
   background: rgba(7, 22, 25, 0.96);
+  order: 1; /* NEW: show search above property block */
 }
+
 
 .guest-results {
   margin-top: 10px;
